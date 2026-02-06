@@ -1,0 +1,24 @@
+
+// Current layout (lines 88-97)
+// <div className="grid md:grid-cols-2 gap-4">
+//   <div className="relative">UserIcon Name</div>
+//   <div className="relative">PhoneIcon Phone</div>
+// </div>
+
+// Proposed layout
+// <div className="space-y-4"> <-- vertical stack
+//   <div className="relative">UserIcon Name</div>
+//   <div className="relative">MapPinIcon City</div> <-- New
+//   <div className="relative">PhoneIcon Phone</div>
+// </div>
+// ...
+// <div className="relative">LockIcon Password</div>
+// <div className="relative">LockIcon Confirm Password</div> <-- New
+
+// New State items:
+// const [name, setName] = useState('');
+// const [city, setCity] = useState('');
+// const [phone, setPhone] = useState('');
+// const [confirmPassword, setConfirmPassword] = useState('');
+
+// Update handleSubmit to check password === confirmPassword
