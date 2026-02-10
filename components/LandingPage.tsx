@@ -60,57 +60,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, onBrowseCases, onVie
       <section className="relative pt-4 pb-2 lg:pt-6 lg:pb-4 overflow-hidden bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid lg:grid-cols-12 gap-16 items-stretch">
-            {/* Left: Text & Actions */}
-            <div className="lg:col-span-7 flex flex-col justify-between py-6">
-              <div className="inline-flex items-center space-x-2 bg-white border border-slate-200 px-4 py-1.5 rounded-full mb-4 shadow-sm">
-                <div className="w-2 h-2 rounded-full bg-[#C5A059] animate-pulse"></div>
-                <span className="text-[10px] font-bold text-[#0F172A] uppercase tracking-[0.2em]">Conexão Jurídica Inteligente</span>
-              </div>
-              <div className="max-w-3xl">
-                <div className="flex flex-col w-full mb-6 font-serif leading-none">
-                  {/* Line 1 - Dark */}
-                  <div className="flex justify-between items-end w-full text-[#0F172A] text-2xl sm:text-4xl lg:text-6xl mb-2 mt-4 font-black tracking-tight">
-                    <span>Conectamos</span>
-                    <span className="mx-2">você</span>
-                    <span>ao</span>
-                  </div>
-
-                  {/* Line 2 - Gold & Title Case */}
-                  <div className="flex justify-between items-end w-full text-[#C5A059] text-2xl sm:text-4xl lg:text-5xl mb-2 font-black">
-                    <span>Escritório</span>
-                    <span>de</span>
-                    <span>Advocacia</span>
-                  </div>
-
-                  {/* Line 3 - Dark */}
-                  <div className="text-[#0F172A] text-2xl sm:text-4xl lg:text-6xl mb-6 font-black tracking-tight">
-                    ideal.
-                  </div>
-                </div>
-
-                <p className="text-2xl text-slate-400 mb-10 leading-relaxed font-medium text-justify w-full pl-1 max-w-2xl">
-                  A tecnologia aproximando você da solução. Relate seu caso e deixe que os melhores especialistas do Brasil encontrem você.
-                </p>
-              </div>
-              <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-                <button
-                  onClick={onStart}
-                  className="bg-[#0F172A] text-white px-10 py-5 rounded-sm font-bold text-xs uppercase tracking-widest hover:bg-[#1E293B] transition shadow-2xl flex items-center justify-center group"
-                >
-                  CADASTRE SEU CASO
-                  <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform w-4 h-4" />
-                </button>
-                <button
-                  onClick={onBrowseCases}
-                  className="bg-white border border-slate-200 px-10 py-5 rounded-sm flex flex-col items-center justify-center min-w-[200px] leading-tight hover:bg-slate-50 transition-colors"
-                >
-                  <span className="text-[#0F172A] font-bold text-[10px] uppercase tracking-[0.2em]">Casos Relatados</span>
-                  <span className="text-slate-400 text-[9px] lowercase tracking-normal mt-1">(para advogados)</span>
-                </button>
-              </div>
-            </div>
-
-            {/* Right: Vertical "Como Funciona" with Horizontal Stats */}
+            {/* Left: Vertical "Como Funciona" with Horizontal Stats */}
             <div className="lg:col-span-5 flex flex-col py-6">
               <div className="glass-card rounded-2xl p-8 lg:p-10 border border-slate-100 shadow-[0_32px_64px_-16px_rgba(15,23,42,0.08)] relative z-20 overflow-hidden bg-white flex flex-col h-full flex-1">
                 <h3 className="text-xl font-serif text-[#0F172A] mb-8 border-b border-slate-100 pb-4 flex items-center justify-between">
@@ -143,7 +93,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, onBrowseCases, onVie
                       </div>
                     ))}
                   </div>
-                  
+
                   {/* Action Button */}
                   <div className="mt-8 pl-16 relative z-10">
                     <button
@@ -173,55 +123,93 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, onBrowseCases, onVie
                 </div>
               </div>
             </div>
+
+            {/* Right: Carousel (Old Vitórias Section) */}
+            <div className="lg:col-span-7 flex flex-col justify-center py-6">
+              <div className="relative w-full aspect-video rounded-2xl overflow-hidden shadow-2xl bg-[#0F172A] group border border-slate-100">
+                {/* Carousel Content */}
+                {SUCCESS_STORIES.map((video, index) => (
+                  <div
+                    key={video.id}
+                    className={`absolute inset-0 transition-opacity duration-1000 flex items-center justify-center ${index === currentVideoIndex ? 'opacity-100' : 'opacity-0'} ${index === currentVideoIndex ? 'pointer-events-auto' : 'pointer-events-none'}`}
+                  >
+                    {/* Background with overlay */}
+                    <div className={`absolute inset-0 ${video.color} opacity-40 mix-blend-multiply`}></div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0F172A] via-transparent to-transparent opacity-90"></div>
+
+                    {/* Content */}
+                    <div className="relative z-20 flex flex-col items-center justify-center text-center p-8">
+                      <div
+                        onClick={() => onViewStory(video.id)}
+                        className="w-16 h-16 md:w-20 md:h-20 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center mb-6 md:mb-8 cursor-pointer hover:scale-110 transition-transform border border-white/20 shadow-xl group/btn"
+                      >
+                        <Play className="w-6 h-6 md:w-8 md:h-8 text-white fill-current translate-x-0.5 group-hover/btn:scale-110 transition-transform" />
+                      </div>
+                      <h3 className="text-white text-2xl md:text-3xl lg:text-4xl font-serif mb-4 drop-shadow-md">{video.title}</h3>
+                      <p className="text-[#C5A059] text-base md:text-lg font-bold uppercase tracking-widest">{video.duration}</p>
+                      <button
+                        onClick={() => onViewStory(video.id)}
+                        className="mt-6 text-white/70 hover:text-white text-xs md:text-sm uppercase tracking-widest border-b border-white/30 hover:border-white transition-colors pb-1"
+                      >
+                        Ver Detalhes do Caso
+                      </button>
+                    </div>
+                  </div>
+                ))}
+
+                {/* Indicators */}
+                <div className="absolute bottom-6 md:bottom-8 left-0 right-0 flex justify-center space-x-3 z-30">
+                  {SUCCESS_STORIES.map((_, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setCurrentVideoIndex(idx)}
+                      className={`h-1.5 rounded-full transition-all duration-300 ${idx === currentVideoIndex ? 'w-12 bg-[#C5A059]' : 'w-2 bg-white/30 hover:bg-white/50'}`}
+                      aria-label={`Go to slide ${idx + 1}`}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
-      {/* Vitórias que Inspiram Section */}
+
+      {/* Conexão Jurídica Section (Old Hero Text) */}
       <section className="py-24 bg-white relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 relative z-10">
-          <h2 className="text-3xl font-serif text-[#0F172A] mb-12 text-center">Vitórias que inspiram..</h2>
-          <div className="relative max-w-5xl mx-auto aspect-video rounded-2xl overflow-hidden shadow-2xl bg-[#0F172A] group border border-slate-100">
-            {/* Carousel Content */}
-            {SUCCESS_STORIES.map((video, index) => (
-              <div
-                key={video.id}
-                className={`absolute inset-0 transition-opacity duration-1000 flex items-center justify-center ${index === currentVideoIndex ? 'opacity-100' : 'opacity-0'} ${index === currentVideoIndex ? 'pointer-events-auto' : 'pointer-events-none'}`}
-              >
-                {/* Background with overlay */}
-                <div className={`absolute inset-0 ${video.color} opacity-40 mix-blend-multiply`}></div>
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0F172A] via-transparent to-transparent opacity-90"></div>
+        <div className="max-w-7xl mx-auto px-4 relative z-10 flex flex-col items-center text-center">
+          <div className="inline-flex items-center space-x-2 bg-white border border-slate-200 px-4 py-1.5 rounded-full mb-8 shadow-sm">
+            <div className="w-2 h-2 rounded-full bg-[#C5A059] animate-pulse"></div>
+            <span className="text-[10px] font-bold text-[#0F172A] uppercase tracking-[0.2em]">Conexão Jurídica Inteligente</span>
+          </div>
 
-                {/* Content */}
-                <div className="relative z-20 flex flex-col items-center justify-center text-center p-8">
-                  <div
-                    onClick={() => onViewStory(video.id)}
-                    className="w-20 h-20 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center mb-8 cursor-pointer hover:scale-110 transition-transform border border-white/20 shadow-xl group/btn"
-                  >
-                    <Play className="w-8 h-8 text-white fill-current translate-x-0.5 group-hover/btn:scale-110 transition-transform" />
-                  </div>
-                  <h3 className="text-white text-3xl md:text-4xl font-serif mb-4 drop-shadow-md">{video.title}</h3>
-                  <p className="text-[#C5A059] text-lg font-bold uppercase tracking-widest">{video.duration}</p>
-                  <button
-                    onClick={() => onViewStory(video.id)}
-                    className="mt-6 text-white/70 hover:text-white text-sm uppercase tracking-widest border-b border-white/30 hover:border-white transition-colors pb-1"
-                  >
-                    Ver Detalhes do Caso
-                  </button>
-                </div>
-              </div>
-            ))}
-
-            {/* Indicators */}
-            <div className="absolute bottom-8 left-0 right-0 flex justify-center space-x-3 z-30">
-              {SUCCESS_STORIES.map((_, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setCurrentVideoIndex(idx)}
-                  className={`h-1.5 rounded-full transition-all duration-300 ${idx === currentVideoIndex ? 'w-12 bg-[#C5A059]' : 'w-2 bg-white/30 hover:bg-white/50'}`}
-                  aria-label={`Go to slide ${idx + 1}`}
-                />
-              ))}
+          <div className="max-w-4xl mx-auto mb-12">
+            <div className="flex flex-col w-full font-serif leading-none items-center">
+              <h1 className="text-[#0F172A] text-4xl sm:text-5xl lg:text-7xl mb-4 font-black tracking-tight">
+                Conectamos você ao <br />
+                <span className="text-[#C5A059]">Escritório de Advocacia</span> <br />
+                ideal.
+              </h1>
             </div>
+            <p className="text-xl md:text-2xl text-slate-400 mt-8 leading-relaxed font-medium max-w-2xl mx-auto">
+              A tecnologia aproximando você da solução. Relate seu caso e deixe que os melhores especialistas do Brasil encontrem você.
+            </p>
+          </div>
+
+          <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6 justify-center w-full">
+            <button
+              onClick={onStart}
+              className="bg-[#0F172A] text-white px-12 py-6 rounded-sm font-bold text-sm uppercase tracking-widest hover:bg-[#1E293B] transition shadow-2xl flex items-center justify-center group"
+            >
+              CADASTRE SEU CASO
+              <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform w-4 h-4" />
+            </button>
+            <button
+              onClick={onBrowseCases}
+              className="bg-white border border-slate-200 px-12 py-6 rounded-sm flex flex-col items-center justify-center min-w-[200px] leading-tight hover:bg-slate-50 transition-colors"
+            >
+              <span className="text-[#0F172A] font-bold text-xs uppercase tracking-[0.2em]">Casos Relatados</span>
+              <span className="text-slate-400 text-[10px] lowercase tracking-normal mt-1">(para advogados)</span>
+            </button>
           </div>
         </div>
       </section>
