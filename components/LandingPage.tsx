@@ -138,21 +138,26 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, onBrowseCases, onVie
                     <div className="absolute inset-0 bg-gradient-to-t from-[#0F172A] via-transparent to-transparent opacity-90"></div>
 
                     {/* Content */}
-                    <div className="relative z-20 flex flex-col items-center justify-center text-center p-8">
+                    <div className="relative z-20 w-full h-full flex flex-col justify-end pb-8">
+                      {/* Centered Play Button */}
                       <div
                         onClick={() => onViewStory(video.id)}
-                        className="w-16 h-16 md:w-20 md:h-20 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center mb-6 md:mb-8 cursor-pointer hover:scale-110 transition-transform border border-white/20 shadow-xl group/btn"
+                        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 md:w-20 md:h-20 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center cursor-pointer hover:scale-110 transition-transform border border-white/20 shadow-xl group/btn"
                       >
                         <Play className="w-6 h-6 md:w-8 md:h-8 text-white fill-current translate-x-0.5 group-hover/btn:scale-110 transition-transform" />
                       </div>
-                      <h3 className="text-white text-2xl md:text-3xl lg:text-4xl font-serif mb-4 drop-shadow-md">{video.title}</h3>
-                      <p className="text-[#C5A059] text-base md:text-lg font-bold uppercase tracking-widest">{video.duration}</p>
-                      <button
-                        onClick={() => onViewStory(video.id)}
-                        className="mt-6 text-white/70 hover:text-white text-xs md:text-sm uppercase tracking-widest border-b border-white/30 hover:border-white transition-colors pb-1"
-                      >
-                        Ver Detalhes do Caso
-                      </button>
+
+                      {/* Bottom Text Content */}
+                      <div className="flex flex-col items-center justify-center text-center px-8">
+                        <h3 className="text-white text-2xl md:text-3xl lg:text-4xl font-serif mb-2 drop-shadow-md">{video.title}</h3>
+                        <p className="text-[#C5A059] text-base md:text-lg font-bold uppercase tracking-widest">{video.duration}</p>
+                        <button
+                          onClick={() => onViewStory(video.id)}
+                          className="mt-4 text-white/70 hover:text-white text-xs md:text-sm uppercase tracking-widest border-b border-white/30 hover:border-white transition-colors pb-1"
+                        >
+                          Ver Detalhes do Caso
+                        </button>
+                      </div>
                     </div>
                   </div>
                 ))}
