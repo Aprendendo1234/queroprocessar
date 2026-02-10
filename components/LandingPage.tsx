@@ -143,6 +143,17 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, onBrowseCases, onVie
                       </div>
                     ))}
                   </div>
+                  
+                  {/* Action Button */}
+                  <div className="mt-8 pl-16 relative z-10">
+                    <button
+                      onClick={onStart}
+                      className="bg-[#0F172A] text-white px-8 py-4 rounded-sm font-bold text-xs uppercase tracking-widest hover:bg-[#1E293B] transition shadow-lg flex items-center group"
+                    >
+                      CADASTRE SEU CASO
+                      <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform w-4 h-4" />
+                    </button>
+                  </div>
                 </div>
 
                 {/* HORIZONTAL STATS - ABAIXO DO TERCEIRO ITEM */}
