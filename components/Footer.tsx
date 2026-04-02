@@ -51,9 +51,8 @@ const Footer: React.FC<FooterProps> = ({ onVitoriasClick, onPropostaClick }) => 
           <div className="flex flex-col items-center">
             <h4 className="font-bold text-xs uppercase tracking-[0.2em] mb-8 text-[#C5A059]">Contato</h4>
             <ul className="space-y-4 text-sm text-slate-400 font-light">
-              <li>contato@queroprocessar.com.br</li>
-              <li>0800 123 4567</li>
-              <li>Av. Paulista, 1000 - SP</li>
+              <li>sacqueroprocessar@gmail.com</li>
+              <li>Vila Mariana - São Paulo</li>
             </ul>
           </div>
         </div>
