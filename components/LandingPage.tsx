@@ -126,7 +126,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, onBrowseCases, onVie
 
             {/* Right: Carousel (Old Vitórias Section) */}
             <div className="lg:col-span-7 flex flex-col justify-center py-6">
-              <div className="relative w-full aspect-video rounded-2xl overflow-hidden shadow-2xl bg-[#0F172A] group border border-slate-100">
+              <div className="relative w-full h-full min-h-[400px] lg:min-h-[500px] rounded-2xl overflow-hidden shadow-2xl bg-[#0F172A] group border border-slate-100">
                 {/* Carousel Content */}
                 {SUCCESS_STORIES.map((video, index) => (
                   <div
@@ -191,7 +191,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, onBrowseCases, onVie
       </section>
 
       {/* Conexão Jurídica Section (Old Hero Text) */}
-      <section className="py-24 bg-white relative overflow-hidden">
+      <section className="pt-10 pb-24 bg-white relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 relative z-10 flex flex-col items-center text-center">
           <div className="inline-flex items-center space-x-2 bg-white border border-slate-200 px-4 py-1.5 rounded-full mb-8 shadow-sm">
             <div className="w-2 h-2 rounded-full bg-[#C5A059] animate-pulse"></div>
