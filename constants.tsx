@@ -87,7 +87,7 @@ export const SUCCESS_STORIES = [
     title: "Indenização Aérea: R$ 8.000,00",
     color: "bg-blue-600",
     duration: "Caso resolvido em 15 dias",
-    coverImage: "/capa-aerea.png",
+    coverImage: "/capa-nova.png",
     summary: "Neste vídeo, explicamos como um cancelamento de voo injustificado resultou em uma indenização significativa para o passageiro, sem a necessidade de audiências presenciais.",
     processDetails: "O processo foi iniciado com um pedido de liminar para reacomodação, seguido de uma ação de danos morais. A companhia aérea propôs acordo após a citação, reconhecendo a falha na prestação do serviço. O valor foi pago em 15 dias úteis."
   },
