@@ -126,6 +126,18 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, onBrowseCases, onVie
 
             {/* Right: Carousel (Old Vitórias Section) */}
             <div className="lg:col-span-7 flex flex-col justify-center py-6">
+              
+              {/* Mobile Only Title */}
+              <div className="block lg:hidden text-center mb-8">
+                <h2 className="text-4xl sm:text-5xl font-serif text-[#0F172A] leading-tight">
+                  Vitórias <br />
+                  <span className="text-[#C5A059] relative inline-block">
+                    Inspiradoras
+                    <span className="absolute bottom-0 left-0 w-full h-[2px] bg-[#C5A059]"></span>
+                  </span>
+                </h2>
+              </div>
+
               <div className="relative w-full h-full min-h-[400px] lg:min-h-[500px] rounded-2xl overflow-hidden shadow-2xl bg-[#0F172A] group border border-slate-100">
                 {/* Carousel Content */}
                 {SUCCESS_STORIES.map((video, index) => (
