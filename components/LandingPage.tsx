@@ -128,10 +128,10 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, onBrowseCases, onVie
             <div className="lg:col-span-7 flex flex-col justify-center py-6">
               
               {/* Mobile Only Title */}
-              <div className="block lg:hidden text-center mb-8">
-                <h2 className="text-4xl sm:text-5xl font-serif text-[#0F172A] leading-tight">
+              <div className="block lg:hidden text-center mb-10 mt-6">
+                <h2 className="text-5xl sm:text-6xl font-serif text-[#0F172A] leading-[1.1]">
                   Vitórias <br />
-                  <span className="text-[#C5A059] relative inline-block">
+                  <span className="text-[#C5A059] relative inline-block mt-2">
                     Inspiradoras
                     <span className="absolute bottom-0 left-0 w-full h-[2px] bg-[#C5A059]"></span>
                   </span>
