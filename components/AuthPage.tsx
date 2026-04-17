@@ -205,7 +205,7 @@ const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onRegister, onGoToTriage }
               type="submit"
               className="w-full bg-[#0F172A] text-white py-5 rounded-xl font-black text-[11px] uppercase tracking-[0.3em] hover:bg-slate-800 transition shadow-2xl shadow-slate-200 flex items-center justify-center active:scale-95 duration-200"
             >
-              {isLogin ? 'Validar Credenciais' : 'Criar Perfil Jurídico'}
+              {isLogin ? 'Entrar' : 'Criar Perfil Jurídico'}
               <ChevronRight className="ml-2 w-4 h-4 text-[#C5A059]" />
             </button>
           </form>
