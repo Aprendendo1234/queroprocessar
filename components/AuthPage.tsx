@@ -79,17 +79,16 @@ const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onRegister, onGoToTriage }
             </button>
           </div>
 
-          {onGoToTriage && (
+          {onGoToTriage && role !== UserRole.LAWYER && (
             <div 
               onClick={onGoToTriage}
               className="bg-[#C5A059]/5 border border-[#C5A059]/30 p-5 rounded-2xl mb-8 flex items-center justify-between cursor-pointer hover:shadow-md hover:scale-[1.02] transition-all group"
             >
               <div className="pr-4">
                 <h4 className="text-[#0F172A] font-serif text-lg mb-1 tracking-tight flex items-center">
-                  <Zap className="w-4 h-4 text-[#C5A059] mr-2" />
-                  Com pressa?
+                  Está com pressa?
                 </h4>
-                <p className="text-slate-500 text-xs">Descreva primeiro o que aconteceu e pule o cadastro longo.</p>
+                <p className="text-slate-500 text-xs">Descreva resumidamente o caso que um especialista entrará em contato.</p>
               </div>
               <div className="w-10 h-10 bg-white rounded-full shadow-sm flex items-center justify-center shrink-0 group-hover:bg-[#C5A059] transition-colors border border-slate-100 group-hover:border-[#C5A059]">
                 <ChevronRight className="w-5 h-5 text-[#C5A059] group-hover:text-white transition-colors" />

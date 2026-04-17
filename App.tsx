@@ -388,6 +388,7 @@ export default function App() {
       name: userData.name,
       email: userData.email,
       city: userData.city,
+      phone: userData.phone,
       password: userData.password,
       active: true,
       status: 'approved',
@@ -400,23 +401,36 @@ export default function App() {
     setUsers(prev => [...prev, userRecord as User]);
     setCurrentUser(userRecord as User);
     
-    // 2. Create Case
-    const freshCase = {
-      ...caseData,
-      id: `c${Date.now()}`,
-      userId: freshUserId,
-      clientName: userRecord.name,
-      status: CaseStatus.PENDING,
-      views: 0,
-      unlockedByIds: [],
-      createdAt: new Date().toISOString()
-    };
-    
-    const { data: caseRecord, error: caseError } = await supabase.from('cases').insert([freshCase]).select().single();
-    if (caseError) return alert("Erro ao salvar caso: " + caseError.message);
-    
-    setCases(prev => [caseRecord as LegalCase, ...prev]);
-    addNotification(MOCK_USERS.ADMIN.id, 'info', 'Novo Caso', `Um novo caso "${caseRecord.title}" foi relatado por ${userRecord.name}.`);
+    // 2. Handle Case with Uploads
+    const { files, ...caseBody } = caseData;
+    let attachmentUrls: string[] = [];
+
+    try {
+      if (files && files.length > 0) {
+        const uploadPromises = Array.from(files as File[]).map(file => uploadFile(file));
+        attachmentUrls = await Promise.all(uploadPromises);
+      }
+
+      const freshCase = {
+        ...caseBody,
+        id: `c${Date.now()}`,
+        userId: freshUserId,
+        clientName: userRecord.name,
+        attachments: attachmentUrls,
+        status: CaseStatus.PENDING,
+        views: 0,
+        unlockedByIds: [],
+        createdAt: new Date().toISOString()
+      };
+      
+      const { data: caseRecord, error: caseError } = await supabase.from('cases').insert([freshCase]).select().single();
+      if (caseError) return alert("Erro ao salvar caso: " + caseError.message);
+      
+      setCases(prev => [caseRecord as LegalCase, ...prev]);
+      addNotification(MOCK_USERS.ADMIN.id, 'info', 'Novo Caso', `Um novo caso "${caseRecord.title}" foi relatado por ${userRecord.name}.`);
+    } catch (err: any) {
+      alert("Erro ao processar anexos: " + err.message);
+    }
     
     setView('dashboard');
   };

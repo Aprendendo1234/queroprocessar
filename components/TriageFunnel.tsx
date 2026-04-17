@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { LEGAL_AREAS } from '../constants';
-import { ChevronRight, ArrowLeft, CheckCircle, Scale, Shield, Zap } from 'lucide-react';
+import { ChevronRight, ArrowLeft, CheckCircle, Shield, Zap, UploadCloud, X, Paperclip } from 'lucide-react';
 import { UrgencyLevel } from '../types';
 
 interface TriageFunnelProps {
@@ -16,9 +16,11 @@ const TriageFunnel: React.FC<TriageFunnelProps> = ({ onComplete, onBack }) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [urgency, setUrgency] = useState<UrgencyLevel>(UrgencyLevel.MEDIUM);
+  const [files, setFiles] = useState<File[]>([]);
 
   // User Data
   const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [city, setCity] = useState('');
   const [password, setPassword] = useState('');
@@ -26,11 +28,22 @@ const TriageFunnel: React.FC<TriageFunnelProps> = ({ onComplete, onBack }) => {
   const handleNext = () => setStep((s) => s + 1);
   const handlePrev = () => setStep((s) => s - 1);
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const newFiles = Array.from(e.target.files);
+      setFiles((prev) => [...prev, ...newFiles]);
+    }
+  };
+
+  const removeFile = (index: number) => {
+    setFiles((prev) => prev.filter((_, i) => i !== index));
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onComplete(
-      { name, email, city, password },
-      { legalArea, title, description, urgency }
+      { name, email, city, password, phone },
+      { legalArea, title, description, urgency, files }
     );
   };
 
@@ -75,25 +88,68 @@ const TriageFunnel: React.FC<TriageFunnelProps> = ({ onComplete, onBack }) => {
         {step === 2 && (
           <div className="animate-in fade-in slide-in-from-right-4 duration-500">
             <h2 className="text-3xl font-serif text-[#0F172A] mb-2">Detalhes do Caso</h2>
-            <p className="text-slate-500 mb-10">Conte-nos brevemente o que aconteceu. Não precisa se preocupar com termos jurídicos.</p>
+            <p className="text-slate-500 mb-8">Conte-nos brevemente o que aconteceu. Não precisa se preocupar com termos jurídicos.</p>
 
             <div className="space-y-6">
+              <div className="grid md:grid-cols-2 gap-4">
+                <div>
+                  <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 block mb-2">Nome e Sobrenome</label>
+                  <input
+                    type="text" placeholder="Ex: João da Silva"
+                    value={name} onChange={e => setName(e.target.value)}
+                    className="w-full px-5 py-4 bg-slate-50 border border-slate-100 rounded-xl focus:ring-2 focus:ring-[#C5A059] transition outline-none font-medium text-slate-800"
+                  />
+                </div>
+                <div>
+                  <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 block mb-2">WhatsApp / Telefone</label>
+                  <input
+                    type="tel" placeholder="(11) 99999-9999"
+                    value={phone} onChange={e => setPhone(e.target.value)}
+                    className="w-full px-5 py-4 bg-slate-50 border border-slate-100 rounded-xl focus:ring-2 focus:ring-[#C5A059] transition outline-none font-medium text-slate-800"
+                  />
+                </div>
+              </div>
+
               <div>
                 <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 block mb-2">Título (Resumo ou Assunto)</label>
                 <input
                   type="text" placeholder="Ex: Cancelamento de Voo e Extravio de Bagagem"
                   value={title} onChange={e => setTitle(e.target.value)}
-                  className="w-full px-6 py-4 bg-slate-50 border border-slate-100 rounded-xl focus:ring-2 focus:ring-[#C5A059] transition outline-none font-medium text-slate-800"
+                  className="w-full px-5 py-4 bg-slate-50 border border-slate-100 rounded-xl focus:ring-2 focus:ring-[#C5A059] transition outline-none font-medium text-slate-800"
                 />
               </div>
 
               <div>
                 <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 block mb-2">O que aconteceu?</label>
                 <textarea
-                  rows={5} placeholder="Fui realizar uma viagem para..."
+                  rows={4} placeholder="Fui realizar uma viagem para..."
                   value={description} onChange={e => setDescription(e.target.value)}
-                  className="w-full px-6 py-4 bg-slate-50 border border-slate-100 rounded-xl focus:ring-2 focus:ring-[#C5A059] transition outline-none resize-none font-light text-slate-700"
+                  className="w-full px-5 py-4 bg-slate-50 border border-slate-100 rounded-xl focus:ring-2 focus:ring-[#C5A059] transition outline-none resize-none font-light text-slate-700"
                 />
+              </div>
+
+              <div>
+                <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 block mb-2">Anexar Provas (Opcional - Fotos, PDF)</label>
+                <label className="w-full flex flex-col items-center justify-center p-6 border-2 border-dashed border-slate-200 rounded-xl hover:border-[#C5A059] hover:bg-[#C5A059]/5 transition-colors cursor-pointer group">
+                  <UploadCloud className="w-8 h-8 text-slate-400 group-hover:text-[#C5A059] mb-2 transition-colors" />
+                  <span className="text-sm text-slate-500 font-medium text-center">Toque para selecionar ou tirar foto</span>
+                  <input type="file" multiple accept="image/*,.pdf" className="hidden" onChange={handleFileChange} />
+                </label>
+                {files.length > 0 && (
+                  <div className="mt-3 space-y-2">
+                    {files.map((f, idx) => (
+                      <div key={idx} className="flex justify-between items-center p-3 bg-slate-50 rounded-lg border border-slate-100 text-sm">
+                        <div className="flex items-center space-x-2 overflow-hidden">
+                          <Paperclip className="w-4 h-4 text-slate-400 shrink-0" />
+                          <span className="text-slate-700 truncate text-xs">{f.name}</span>
+                        </div>
+                        <button type="button" onClick={() => removeFile(idx)} className="text-red-400 hover:text-red-600 p-1 shrink-0">
+                          <X className="w-4 h-4" />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
 
               <div>
@@ -113,9 +169,9 @@ const TriageFunnel: React.FC<TriageFunnelProps> = ({ onComplete, onBack }) => {
               </div>
 
               <button
-                disabled={!title || !description}
+                disabled={!title || !description || !name || !phone}
                 onClick={handleNext}
-                className="w-full mt-8 bg-[#C5A059] text-white py-5 rounded-xl font-black text-xs uppercase tracking-[0.3em] hover:bg-[#B38E46] transition shadow-lg shadow-[#C5A059]/20 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed group"
+                className="w-full mt-4 bg-[#C5A059] text-white py-5 rounded-xl font-black text-xs uppercase tracking-[0.3em] hover:bg-[#B38E46] transition shadow-lg shadow-[#C5A059]/20 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed group"
               >
                 Avançar
                 <ChevronRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -131,29 +187,24 @@ const TriageFunnel: React.FC<TriageFunnelProps> = ({ onComplete, onBack }) => {
                 <CheckCircle className="w-8 h-8 text-[#C5A059]" />
               </div>
             </div>
-            <h2 className="text-3xl font-serif text-center text-[#0F172A] mb-4">Quase lá!</h2>
+            <h2 className="text-3xl font-serif text-center text-[#0F172A] mb-4">Quase lá, {name.split(' ')[0]}!</h2>
             <p className="text-slate-500 text-center mb-10 max-w-lg mx-auto leading-relaxed text-sm">
-              Encontramos especialistas em <strong>{legalArea}</strong>. Para enviarmos o seu caso diretamente para a mesa deles de forma sigilosa, preencha os dados de contato.
+              Encontramos especialistas em <strong>{legalArea}</strong>. Para enviarmos o seu caso de forma sigilosa para eles e você acompanhar o andamento, crie sua conta abaixo.
             </p>
 
             <form onSubmit={handleSubmit} className="space-y-5">
               <div className="grid md:grid-cols-2 gap-5">
                 <input
-                  type="text" required placeholder="Seu Nome Completo"
-                  value={name} onChange={e => setName(e.target.value)}
+                  type="email" required placeholder="Seu melhor E-mail"
+                  value={email} onChange={e => setEmail(e.target.value)}
                   className="w-full px-5 py-4 bg-slate-50 border border-slate-100 rounded-xl focus:ring-2 focus:ring-[#C5A059] transition outline-none font-medium"
                 />
                 <input
-                  type="text" required placeholder="Cidade"
+                  type="text" required placeholder="Qual sua Cidade?"
                   value={city} onChange={e => setCity(e.target.value)}
                   className="w-full px-5 py-4 bg-slate-50 border border-slate-100 rounded-xl focus:ring-2 focus:ring-[#C5A059] transition outline-none font-medium"
                 />
               </div>
-              <input
-                type="email" required placeholder="Seu melhor E-mail"
-                value={email} onChange={e => setEmail(e.target.value)}
-                className="w-full px-5 py-4 bg-slate-50 border border-slate-100 rounded-xl focus:ring-2 focus:ring-[#C5A059] transition outline-none font-medium"
-              />
               <input
                 type="password" required placeholder="Crie uma Senha para acessar sua conta depois"
                 value={password} onChange={e => setPassword(e.target.value)}
@@ -163,7 +214,7 @@ const TriageFunnel: React.FC<TriageFunnelProps> = ({ onComplete, onBack }) => {
               <div className="pt-6">
                 <button
                   type="submit"
-                  disabled={!name || !city || !email || !password}
+                  disabled={!city || !email || !password}
                   className="w-full bg-[#0F172A] text-white py-5 rounded-xl font-black text-[11px] uppercase tracking-[0.3em] hover:bg-[#1E293B] transition shadow-2xl flex items-center justify-center active:scale-95 duration-200 disabled:opacity-50"
                 >
                   Confirmar e Enviar Caso Grátis
