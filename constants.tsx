@@ -104,6 +104,7 @@ export const SUCCESS_STORIES = [
     id: 2,
     title: "Revisão de Juros Abusivos",
     color: "bg-emerald-600",
+    coverImage: "/thumb-juros.png",
     duration: "Economia de R$ 12.400,00",
     summary: "Veja como a análise detalhada de um contrato de financiamento de veículo revelou taxas ilegais e juros acima da média de mercado.",
     processDetails: "Foi ajuizada uma ação revisional de contrato. A perícia contábil demonstrou a capitalização de juros (anatocismo) não pactuada. O banco foi condenado a restituir os valores cobrados a maior e a readequar as parcelas, gerando uma economia total de mais de 12 mil reais."
