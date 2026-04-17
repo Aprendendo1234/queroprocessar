@@ -400,7 +400,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, onBrowseCases, onVie
               <h3 className="text-2xl font-serif text-[#0F172A] mb-4">Vantagens de se cadastrar</h3>
               <p className="text-slate-500 font-light text-center">Tenha em mãos as melhores oportunidades jurídicas, filtradas por área de atuação e urgência, prontas para o seu atendimento.</p>
             </div>
-            <button onClick={onStart} className="bg-[#0F172A] text-white px-10 py-5 rounded-sm font-bold uppercase tracking-widest text-xs hover:bg-[#1E293B] transition shadow-lg">Cadastrar Escritório</button>
+            <button onClick={onBrowseCases} className="bg-[#0F172A] text-white px-10 py-5 rounded-sm font-bold uppercase tracking-widest text-xs hover:bg-[#1E293B] transition shadow-lg">Cadastrar Escritório</button>
           </div>
         </div>
       </section>
