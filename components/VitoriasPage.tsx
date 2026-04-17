@@ -29,8 +29,15 @@ const VitoriasPage: React.FC<VitoriasPageProps> = ({ onBack }) => {
                                 {/* Main Content - Left: Video */}
                                 <div>
                                     <div className={`relative aspect-video rounded-2xl overflow-hidden shadow-2xl bg-slate-900 group`}>
-                                        <div className={`absolute inset-0 ${story.color} opacity-20`}></div>
-                                        <div className="absolute inset-0 flex items-center justify-center">
+                                        {(story as any).coverImage ? (
+                                            <div className="absolute inset-0 w-full h-full">
+                                                <img src={(story as any).coverImage} alt={story.title} className="w-full h-full object-cover" />
+                                                <div className={`absolute inset-0 ${story.color} opacity-40 mix-blend-multiply`}></div>
+                                            </div>
+                                        ) : (
+                                            <div className={`absolute inset-0 ${story.color} opacity-20`}></div>
+                                        )}
+                                        <div className="absolute inset-0 flex items-center justify-center z-10">
                                             <div className="w-20 h-20 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center cursor-pointer hover:scale-110 transition-transform border border-white/20 shadow-xl group-hover:bg-white/20">
                                                 <Play className="w-8 h-8 text-white fill-current translate-x-0.5" />
                                             </div>

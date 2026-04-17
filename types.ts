@@ -83,6 +83,7 @@ export interface SuccessStory {
   id: number;
   title: string;
   videoUrl?: string;
+  coverImage?: string;
   color: string;
   duration: string;
   summary: string;
