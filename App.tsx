@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect, useMemo } from 'react';
+import { Routes, Route, useNavigate, Navigate, useParams } from 'react-router-dom';
 import { User, UserRole, LegalCase, CaseStatus, UrgencyLevel, PublicationType, ChatMessage, Notification } from './types';
 import { MOCK_USERS } from './constants';
 import LandingPage from './components/LandingPage';
@@ -70,6 +71,15 @@ const INITIAL_CASES: LegalCase[] = [
   }
 ];
 
+// Helper to wrap CaseSuccessPage with ID from URL
+const SuccessCaseWrapper = ({ onBack }: { onBack: () => void }) => {
+  const { id } = useParams();
+  const story = SUCCESS_STORIES.find(s => s.id === Number(id));
+  
+  if (!story) return <Navigate to="/vitorias" />;
+  return <CaseSuccessPage story={story} onBack={onBack} />;
+};
+
 export default function App() {
   // Initialize users state with values from MOCK_USERS
   const [users, setUsers] = useState<User[]>([
@@ -78,8 +88,7 @@ export default function App() {
     MOCK_USERS.ADMIN as User
   ]);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
-  const [view, setView] = useState<'landing' | 'auth' | 'triage' | 'dashboard' | 'success-case' | 'vitorias' | 'proposta'>('landing');
-  const [selectedStoryId, setSelectedStoryId] = useState<number | null>(null);
+  const navigate = useNavigate();
   const [cases, setCases] = useState<LegalCase[]>(INITIAL_CASES);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [notifications, setNotifications] = useState<Notification[]>([]);
@@ -140,7 +149,7 @@ export default function App() {
         return;
       }
       setCurrentUser(user);
-      setView('dashboard');
+      navigate('/painel');
     } else {
       alert("Usuário não encontrado.");
     }
@@ -173,17 +182,17 @@ export default function App() {
 
       if (user.status === 'approved') {
         setCurrentUser(user);
-        setView('dashboard');
+        navigate('/painel');
       } else {
         alert("Cadastro realizado! Aguarde a aprovação do administrador.");
-        setView('landing');
+        navigate('/');
       }
     }
   };
 
   const logout = () => {
     setCurrentUser(null);
-    setView('landing');
+    navigate('/');
   };
 
   const uploadFile = async (file: File) => {
@@ -432,94 +441,96 @@ export default function App() {
       alert("Erro ao processar anexos: " + err.message);
     }
     
-    setView('dashboard');
+    navigate('/painel');
   };
 
-  const viewStory = (id: number) => {
-    setSelectedStoryId(id);
-    setView('success-case');
-  };
+
 
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar
         user={currentUser}
         onLogout={logout}
-        onLoginClick={() => setView('auth')}
-        onHomeClick={() => setView('landing')}
-        onDashboardClick={() => setView('dashboard')}
-        onVitoriasClick={() => setView('vitorias')}
-        onPropostaClick={() => setView('proposta')}
-        onStartClick={() => setView(currentUser ? 'dashboard' : 'auth')}
+        onLoginClick={() => navigate('/login')}
+        onHomeClick={() => navigate('/')}
+        onDashboardClick={() => navigate('/painel')}
+        onVitoriasClick={() => navigate('/vitorias')}
+        onPropostaClick={() => navigate('/sobre')}
+        onStartClick={() => navigate(currentUser ? '/painel' : '/relatar-caso')}
       />
 
       <main className="flex-grow">
-        {view === 'landing' && (
-          <LandingPage
-            onStart={() => setView('triage')}
-            onBrowseCases={() => setView(currentUser ? 'dashboard' : 'auth')}
-            onViewStory={viewStory}
-          />
-        )}
-        {view === 'vitorias' && (
-          <VitoriasPage onBack={() => setView('landing')} />
-        )}
-        {view === 'proposta' && (
-          <PropostaPage onBack={() => setView('landing')} />
-        )}
-        {view === 'success-case' && selectedStoryId && (
-          <CaseSuccessPage
-            story={SUCCESS_STORIES.find(s => s.id === selectedStoryId)!}
-            onBack={() => setView('landing')}
-          />
-        )}
-        {view === 'auth' && <AuthPage onLogin={login} onRegister={register} onGoToTriage={() => setView('triage')} />}
-        {view === 'triage' && (
-          <TriageFunnel 
-            onComplete={handleTriageComplete} 
-            onBack={() => setView('landing')} 
-          />
-        )}
-        {view === 'dashboard' && currentUser?.role === UserRole.CLIENT && (
-          <ClientDashboard
-            user={currentUser}
-            cases={cases.filter(c => c.userId === currentUser.id)}
-            onSubmitCase={addCase}
-            messages={messages}
-            onSendMessage={sendMessage}
-            notifications={notifications.filter(n => n.userId === currentUser.id)}
-          />
-        )}
-        {view === 'dashboard' && currentUser?.role === UserRole.LAWYER && (
-          <LawyerDashboard
-            user={currentUser}
-            allCases={cases.filter(c => c.status === CaseStatus.APPROVED)}
-            onUnlock={unlockCase}
-            messages={messages}
-            onSendMessage={sendMessage}
-            notifications={notifications.filter(n => n.userId === currentUser.id)}
-          />
-        )}
-        {view === 'dashboard' && currentUser?.role === UserRole.ADMIN && (
-          <AdminDashboard
-            user={currentUser}
-            allCases={cases}
-            users={users}
-            onApproveCase={approveCase}
-            onRejectCase={rejectCase}
-            onApproveUser={approveUser}
-            onRejectUser={rejectUser}
-            onDeleteUser={deleteUser}
-            totalRevenue={cases.reduce((acc, c) => acc + (c.unlockedByIds.length * (c.unlockPrice || 0)), 0)}
-            messages={messages}
-            onSendMessage={sendMessage}
-          />
-        )}
+        <Routes>
+          <Route path="/" element={
+            <LandingPage
+              onStart={() => navigate('/relatar-caso')}
+              onBrowseCases={() => navigate(currentUser ? '/painel' : '/login')}
+              onViewStory={(id) => navigate(`/vitoria/${id}`)}
+            />
+          } />
+          
+          <Route path="/vitorias" element={<VitoriasPage onBack={() => navigate('/')} />} />
+          
+          <Route path="/sobre" element={<PropostaPage onBack={() => navigate('/')} />} />
+          
+          <Route path="/vitoria/:id" element={<SuccessCaseWrapper onBack={() => navigate('/vitorias')} />} />
+          
+          <Route path="/login" element={<AuthPage onLogin={login} onRegister={register} onGoToTriage={() => navigate('/relatar-caso')} />} />
+          
+          <Route path="/relatar-caso" element={
+            <TriageFunnel 
+              onComplete={handleTriageComplete} 
+              onBack={() => navigate('/')} 
+            />
+          } />
+          
+          <Route path="/painel" element={
+            !currentUser ? <Navigate to="/login" /> : (
+              <>
+                {currentUser.role === UserRole.CLIENT && (
+                  <ClientDashboard
+                    user={currentUser}
+                    cases={cases.filter(c => c.userId === currentUser.id)}
+                    onSubmitCase={addCase}
+                    messages={messages}
+                    onSendMessage={sendMessage}
+                    notifications={notifications.filter(n => n.userId === currentUser.id)}
+                  />
+                )}
+                {currentUser.role === UserRole.LAWYER && (
+                  <LawyerDashboard
+                    user={currentUser}
+                    allCases={cases.filter(c => c.status === CaseStatus.APPROVED)}
+                    onUnlock={unlockCase}
+                    messages={messages}
+                    onSendMessage={sendMessage}
+                    notifications={notifications.filter(n => n.userId === currentUser.id)}
+                  />
+                )}
+                {currentUser.role === UserRole.ADMIN && (
+                  <AdminDashboard
+                    user={currentUser}
+                    allCases={cases}
+                    users={users}
+                    onApproveCase={approveCase}
+                    onRejectCase={rejectCase}
+                    onApproveUser={approveUser}
+                    onRejectUser={rejectUser}
+                    onDeleteUser={deleteUser}
+                    totalRevenue={cases.reduce((acc, c) => acc + (c.unlockedByIds.length * (c.unlockPrice || 0)), 0)}
+                    messages={messages}
+                    onSendMessage={sendMessage}
+                  />
+                )}
+              </>
+            )
+          } />
+        </Routes>
       </main>
 
       <Footer
-        onVitoriasClick={() => setView('vitorias')}
-        onPropostaClick={() => setView('proposta')}
+        onVitoriasClick={() => navigate('/vitorias')}
+        onPropostaClick={() => navigate('/sobre')}
       />
     </div>
   );
