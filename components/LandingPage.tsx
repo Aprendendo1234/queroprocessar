@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   CheckCircle, Shield, Star, Zap, ArrowRight, MessageSquare,
   Search, Award, Gavel, Users, BarChart3, HelpCircle, ChevronDown, Check,
@@ -17,12 +17,27 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, onBrowseCases, onVie
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
 
+  const carouselVideos = useMemo(() => {
+    const promoVideo = SUCCESS_STORIES.find(s => s.id === 4);
+    const otherVideos = SUCCESS_STORIES.filter(s => s.id !== 4);
+    
+    if (!promoVideo) return SUCCESS_STORIES.map(v => ({...v, _carouselId: String(v.id)}));
+    
+    const seq: any[] = [];
+    otherVideos.forEach((video, i) => {
+      seq.push({ ...promoVideo, _carouselId: `promo_${i}` });
+      seq.push({ ...video, _carouselId: `video_${video.id}` });
+    });
+    seq.push({ ...promoVideo, _carouselId: `promo_end` });
+    return seq;
+  }, []);
+
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentVideoIndex((prev) => (prev + 1) % SUCCESS_STORIES.length);
+      setCurrentVideoIndex((prev) => (prev + 1) % carouselVideos.length);
     }, 5000);
     return () => clearInterval(timer);
-  }, []);
+  }, [carouselVideos.length]);
 
   const stats = [
     { label: 'Casos Relatados', value: '6.200+', icon: <Gavel className="w-3 h-3" /> },
@@ -140,9 +155,9 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, onBrowseCases, onVie
 
               <div className="relative w-full h-full min-h-[400px] lg:min-h-[500px] rounded-2xl overflow-hidden shadow-2xl bg-[#0F172A] group border border-slate-100">
                 {/* Carousel Content */}
-                {SUCCESS_STORIES.map((video, index) => (
+                {carouselVideos.map((video, index) => (
                   <div
-                    key={video.id}
+                    key={video._carouselId}
                     className={`absolute inset-0 transition-opacity duration-1000 flex items-center justify-center ${index === currentVideoIndex ? 'opacity-100' : 'opacity-0'} ${index === currentVideoIndex ? 'pointer-events-auto' : 'pointer-events-none'}`}
                   >
                     {/* Background with overlay */}
@@ -187,7 +202,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, onBrowseCases, onVie
 
                 {/* Indicators */}
                 <div className="absolute bottom-6 md:bottom-8 left-0 right-0 flex justify-center space-x-3 z-30">
-                  {SUCCESS_STORIES.map((_, idx) => (
+                  {carouselVideos.map((_, idx) => (
                     <button
                       key={idx}
                       onClick={() => setCurrentVideoIndex(idx)}
