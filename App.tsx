@@ -459,7 +459,7 @@ export default function App() {
             onBack={() => setView('landing')}
           />
         )}
-        {view === 'auth' && <AuthPage onLogin={login} onRegister={register} />}
+        {view === 'auth' && <AuthPage onLogin={login} onRegister={register} onGoToTriage={() => setView('triage')} />}
         {view === 'triage' && (
           <TriageFunnel 
             onComplete={handleTriageComplete} 

@@ -1,16 +1,17 @@
 
 import React, { useState } from 'react';
 import { UserRole } from '../types';
-import { Scale, Mail, Lock, User as UserIcon, Phone, Briefcase, ShieldCheck, ChevronRight, Award, MapPin } from 'lucide-react';
+import { Scale, Mail, Lock, User as UserIcon, Phone, Briefcase, ShieldCheck, ChevronRight, Award, MapPin, Zap } from 'lucide-react';
 
 import { User } from '../types';
 
 interface AuthPageProps {
   onLogin: (email: string, password: string) => void;
   onRegister: (userData: Partial<User> & { password?: string }) => void;
+  onGoToTriage?: () => void;
 }
 
-const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onRegister }) => {
+const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onRegister, onGoToTriage }) => {
   const [isLogin, setIsLogin] = useState(true);
   const [role, setRole] = useState<UserRole>(UserRole.CLIENT);
   const [email, setEmail] = useState('');
@@ -77,6 +78,24 @@ const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onRegister }) => {
               Registrar-se
             </button>
           </div>
+
+          {onGoToTriage && (
+            <div 
+              onClick={onGoToTriage}
+              className="bg-[#C5A059]/5 border border-[#C5A059]/30 p-5 rounded-2xl mb-8 flex items-center justify-between cursor-pointer hover:shadow-md hover:scale-[1.02] transition-all group"
+            >
+              <div className="pr-4">
+                <h4 className="text-[#0F172A] font-serif text-lg mb-1 tracking-tight flex items-center">
+                  <Zap className="w-4 h-4 text-[#C5A059] mr-2" />
+                  Com pressa?
+                </h4>
+                <p className="text-slate-500 text-xs">Descreva primeiro o que aconteceu e pule o cadastro longo.</p>
+              </div>
+              <div className="w-10 h-10 bg-white rounded-full shadow-sm flex items-center justify-center shrink-0 group-hover:bg-[#C5A059] transition-colors border border-slate-100 group-hover:border-[#C5A059]">
+                <ChevronRight className="w-5 h-5 text-[#C5A059] group-hover:text-white transition-colors" />
+              </div>
+            </div>
+          )}
 
           <form onSubmit={handleSubmit} className="space-y-8">
             {!isLogin && (
