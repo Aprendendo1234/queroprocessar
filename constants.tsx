@@ -113,6 +113,7 @@ export const SUCCESS_STORIES = [
     id: 3,
     title: "Divórcio Consensual Online",
     color: "bg-purple-600",
+    coverImage: "/thumb-divorcio.png",
     duration: "Finalizado em 48 horas",
     summary: "Entenda a facilidade e a rapidez do divórcio extrajudicial quando há consenso entre as partes e não existem filhos menores.",
     processDetails: "O procedimento foi realizado inteiramente via cartório digital. As partes, assistidas por advogado, assinaram a escritura pública digitalmente via certificado e-Notariado. Todo o trâmite, desde a protocolização até a emissão da certidão de divórcio, levou apenas 2 dias úteis."
