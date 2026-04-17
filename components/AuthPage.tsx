@@ -191,17 +191,6 @@ const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onRegister }) => {
               <ChevronRight className="ml-2 w-4 h-4 text-[#C5A059]" />
             </button>
           </form>
-
-          <div className="mt-10 text-center">
-            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
-              Ambiente Seguro de Teste
-            </p>
-            <div className="mt-4 flex flex-wrap justify-center gap-3">
-              {['cliente@teste.com', 'advogado@teste.com', 'admin@queroprocessar.com'].map(e => (
-                <span key={e} className="text-[9px] bg-slate-50 border border-slate-100 px-2 py-1 rounded-md text-slate-400 font-mono">{e}</span>
-              ))}
-            </div>
-          </div>
         </div>
       </div>
     </div>
