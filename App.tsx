@@ -11,6 +11,7 @@ import Navbar from './components/Navbar';
 import VitoriasPage from './components/VitoriasPage';
 import PropostaPage from './components/PropostaPage';
 
+import TriageFunnel from './components/TriageFunnel';
 import Footer from './components/Footer';
 import CaseSuccessPage from './components/CaseSuccessPage';
 import { SUCCESS_STORIES } from './constants';
@@ -77,7 +78,7 @@ export default function App() {
     MOCK_USERS.ADMIN as User
   ]);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
-  const [view, setView] = useState<'landing' | 'auth' | 'dashboard' | 'success-case' | 'vitorias' | 'proposta'>('landing');
+  const [view, setView] = useState<'landing' | 'auth' | 'triage' | 'dashboard' | 'success-case' | 'vitorias' | 'proposta'>('landing');
   const [selectedStoryId, setSelectedStoryId] = useState<number | null>(null);
   const [cases, setCases] = useState<LegalCase[]>(INITIAL_CASES);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -370,6 +371,56 @@ export default function App() {
     }
   };
 
+  const setNotificationRead = async (notificationId: string) => {
+    const { error } = await supabase.from('notifications').update({ read: true }).eq('id', notificationId);
+    if (!error) {
+      setNotifications(prev => prev.map(n => n.id === notificationId ? { ...n, read: true } : n));
+    }
+  };
+
+  const handleTriageComplete = async (userData: any, caseData: any) => {
+    const freshUserId = `u${Date.now()}`;
+    
+    // 1. Create User
+    const newUser = {
+      id: freshUserId,
+      role: UserRole.CLIENT,
+      name: userData.name,
+      email: userData.email,
+      city: userData.city,
+      password: userData.password,
+      active: true,
+      status: 'approved',
+      createdAt: new Date().toISOString()
+    };
+    
+    const { data: userRecord, error: userError } = await supabase.from('profiles').insert([newUser]).select().single();
+    if (userError) return alert("Erro ao criar conta: " + userError.message);
+    
+    setUsers(prev => [...prev, userRecord as User]);
+    setCurrentUser(userRecord as User);
+    
+    // 2. Create Case
+    const freshCase = {
+      ...caseData,
+      id: `c${Date.now()}`,
+      userId: freshUserId,
+      clientName: userRecord.name,
+      status: CaseStatus.PENDING,
+      views: 0,
+      unlockedByIds: [],
+      createdAt: new Date().toISOString()
+    };
+    
+    const { data: caseRecord, error: caseError } = await supabase.from('cases').insert([freshCase]).select().single();
+    if (caseError) return alert("Erro ao salvar caso: " + caseError.message);
+    
+    setCases(prev => [caseRecord as LegalCase, ...prev]);
+    addNotification(MOCK_USERS.ADMIN.id, 'info', 'Novo Caso', `Um novo caso "${caseRecord.title}" foi relatado por ${userRecord.name}.`);
+    
+    setView('dashboard');
+  };
+
   const viewStory = (id: number) => {
     setSelectedStoryId(id);
     setView('success-case');
@@ -391,7 +442,7 @@ export default function App() {
       <main className="flex-grow">
         {view === 'landing' && (
           <LandingPage
-            onStart={() => setView(currentUser ? 'dashboard' : 'auth')}
+            onStart={() => setView('triage')}
             onBrowseCases={() => setView(currentUser ? 'dashboard' : 'auth')}
             onViewStory={viewStory}
           />
@@ -409,6 +460,12 @@ export default function App() {
           />
         )}
         {view === 'auth' && <AuthPage onLogin={login} onRegister={register} />}
+        {view === 'triage' && (
+          <TriageFunnel 
+            onComplete={handleTriageComplete} 
+            onBack={() => setView('landing')} 
+          />
+        )}
         {view === 'dashboard' && currentUser?.role === UserRole.CLIENT && (
           <ClientDashboard
             user={currentUser}
