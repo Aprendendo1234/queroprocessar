@@ -32,7 +32,7 @@ const VitoriasPage: React.FC<VitoriasPageProps> = ({ onBack }) => {
                                         {(story as any).coverImage ? (
                                             <div className="absolute inset-0 w-full h-full">
                                                 <img src={(story as any).coverImage} alt={story.title} className="w-full h-full object-cover" />
-                                                <div className={`absolute inset-0 ${story.color} opacity-40 mix-blend-multiply`}></div>
+                                                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors pointer-events-none"></div>
                                             </div>
                                         ) : (
                                             <div className={`absolute inset-0 ${story.color} opacity-20`}></div>

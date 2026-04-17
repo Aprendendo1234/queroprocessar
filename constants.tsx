@@ -83,6 +83,15 @@ export const MOCK_USERS = {
 
 export const SUCCESS_STORIES = [
   {
+    id: 4,
+    title: "Institucional: Como funciona o QueroProcessar",
+    color: "bg-amber-600",
+    coverImage: "/thumb-promocional.png",
+    duration: "Vídeo Comercial",
+    summary: "Aprenda como relatar o seu caso e encontrar o advogado ideal para sua situação. Rápido, seguro e 100% gratuito para quem relata.",
+    processDetails: "O vídeo explora o funcionamento da nossa plataforma, destacando as áreas de atuação (como Indenização Aérea, Revisão de Juros Abusivos, Divórcio Consensual, entre outras) e o passo a passo para conectar clientes a especialistas jurídicos."
+  },
+  {
     id: 1,
     title: "Indenização Aérea: R$ 8.000,00",
     color: "bg-blue-600",
@@ -90,15 +99,6 @@ export const SUCCESS_STORIES = [
     coverImage: "/capa-nova.png",
     summary: "Neste vídeo, explicamos como um cancelamento de voo injustificado resultou em uma indenização significativa para o passageiro, sem a necessidade de audiências presenciais.",
     processDetails: "O processo foi iniciado com um pedido de liminar para reacomodação, seguido de uma ação de danos morais. A companhia aérea propôs acordo após a citação, reconhecendo a falha na prestação do serviço. O valor foi pago em 15 dias úteis."
-  },
-  {
-    id: 4,
-    title: "Institucional: Como funciona o QueroProcessar",
-    color: "bg-amber-600",
-    duration: "Vídeo Comercial",
-    coverImage: "/thumb-promocional.png",
-    summary: "Aprenda como relatar o seu caso e encontrar o advogado ideal para sua situação. Rápido, seguro e 100% gratuito para quem relata.",
-    processDetails: "O vídeo explora o funcionamento da nossa plataforma, destacando as áreas de atuação (como Indenização Aérea, Revisão de Juros Abusivos, Divórcio Consensual, entre outras) e o passo a passo para conectar clientes a especialistas jurídicos."
   },
   {
     id: 2,
