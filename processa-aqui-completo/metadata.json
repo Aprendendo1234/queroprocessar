@@ -1,8 +1,0 @@
-{
-  "name": "Quero Processar",
-  "description": "Plataforma jurídica que conecta clientes a advogados especializados, permitindo o relato de casos e a contratação segura de serviços jurídicos.",
-  "requestFramePermissions": [
-    "camera",
-    "microphone"
-  ]
-}
