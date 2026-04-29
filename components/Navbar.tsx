@@ -42,7 +42,7 @@ const Navbar: React.FC<NavbarProps> = ({ user, onLogout, onLoginClick, onHomeCli
             </a>
             <a
               href="#"
-              onClick={(e) => { e.preventDefault(); onStartClick(); }}
+              onClick={(e) => { e.preventDefault(); onLoginClick(); }}
               className="text-slate-400 hover:text-[#0F172A] transition font-bold text-[10px] uppercase tracking-[0.2em] leading-tight flex flex-col items-center"
             >
               <span>Casos Relatados</span>
