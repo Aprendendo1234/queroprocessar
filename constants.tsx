@@ -86,10 +86,46 @@ export const SUCCESS_STORIES = [
     id: 4,
     title: "Institucional: Como funciona o QueroProcessar",
     color: "bg-amber-600",
-    coverImage: "/thumb-promocional.png",
+    coverImage: "/THUMB000.png",
     duration: "Vídeo Comercial",
     summary: "Aprenda como relatar o seu caso e encontrar o advogado ideal para sua situação. Rápido, seguro e 100% gratuito para quem relata.",
     processDetails: "O vídeo explora o funcionamento da nossa plataforma, destacando as áreas de atuação (como Indenização Aérea, Revisão de Juros Abusivos, Divórcio Consensual, entre outras) e o passo a passo para conectar clientes a especialistas jurídicos."
+  },
+  {
+    id: 5,
+    title: "Sujaram seu nome? Nem conhece a empresa? Você pode ser indenizado!",
+    color: "bg-teal-600",
+    coverImage: "/negativacao.png",
+    duration: "Respostas liminares em curto espaço de tempo.",
+    summary: "Indenização por Negativação Indevida.",
+    processDetails: "Saiba que as empresas tem obrigação por lei de serem transparentes com relação a qualquer dívida ou pendência envolvendo o consumidor! Toda dívida contraída de fato deve estar amparada em uma contratação validade e idônea com prova inequívoca de consentimento do contratante o que nem sempre ocorre."
+  },
+  {
+    id: 6,
+    title: "Foi multado no Bafômetro?!",
+    color: "bg-red-600",
+    coverImage: "/bafometro.png",
+    duration: "Recurso Administrativo ou Judicial",
+    summary: "Enquanto sua infração está em sede de Recurso seja Administrativo ou Judicial não paga a multa e não suspende o direito de dirigir.",
+    processDetails: "No mínimo prorrogue o pagamento da sua infração e seu direito de dirigir contestando possíveis irregularidades na autuação da infração."
+  },
+  {
+    id: 8,
+    title: "Foi demitida ou até mesmo pediu as contas já grávida?",
+    color: "bg-pink-600",
+    coverImage: "/estabilidade.png",
+    duration: "Respostas liminares na média em 30 dias.",
+    summary: "Saiba que a grávida possui direito a estabilidade até 05 meses após o parto do filho.",
+    processDetails: "Foi demitida ou até mesmo pediu demissão já grávida?! Saiba que pode ter  sua estabilidade gestacional reconhecida com todos os seus direitos trabalhistas até  05 meses após o parto."
+  },
+  {
+    id: 7,
+    title: "Bpc/Loas saiba se você tem direito!",
+    color: "bg-blue-500",
+    coverImage: "/bpc.png",
+    duration: "Processos Administrativos em torno de 06 meses judiciais variáveis de acordo com o órgão julgador.",
+    summary: "Uma quase aposentadoria sem contribuição.",
+    processDetails: "Saiba quais são os requisitos para a concessão do benefício de prestação continuada mais famoso da seguridade social."
   },
   {
     id: 1,
