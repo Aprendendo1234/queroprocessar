@@ -76,7 +76,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, onBrowseCases, onVie
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid lg:grid-cols-12 gap-16 items-stretch">
             {/* Left: Vertical "Como Funciona" with Horizontal Stats */}
-            <div className="lg:col-span-5 flex flex-col py-6">
+            <div className="lg:col-span-5 flex flex-col py-6 order-2">
               <div className="glass-card rounded-2xl p-8 lg:p-10 border border-slate-100 shadow-[0_32px_64px_-16px_rgba(15,23,42,0.08)] relative z-20 overflow-hidden bg-white flex flex-col h-full flex-1">
                 <h3 className="text-xl font-serif text-[#0F172A] mb-8 border-b border-slate-100 pb-4 flex items-center justify-between">
                   Como Funciona
@@ -140,7 +140,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, onBrowseCases, onVie
             </div>
 
             {/* Right: Carousel (Old Vitórias Section) */}
-            <div className="lg:col-span-7 flex flex-col justify-center py-6">
+            <div className="lg:col-span-7 flex flex-col justify-center py-6 order-1">
               
               {/* Mobile Only Title */}
               <div className="block lg:hidden text-center mb-10 mt-6">
