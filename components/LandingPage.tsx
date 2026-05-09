@@ -162,9 +162,11 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, onBrowseCases, onVie
                   >
                     {/* Background with overlay */}
                     {(video as any).coverImage ? (
-                      <div className="absolute inset-0 w-full h-full p-4 flex items-center justify-center">
-                        <img src={(video as any).coverImage} alt={video.title} className="w-full h-full object-contain" />
-                        <div className="absolute inset-0 bg-black/20 hover:bg-black/10 transition-colors pointer-events-none"></div>
+                      <div className="absolute inset-0 w-full h-full flex items-center justify-center overflow-hidden bg-[#0F172A]">
+                        {/* Blurred background for premium look */}
+                        <img src={(video as any).coverImage} alt="" className="absolute inset-0 w-full h-full object-cover blur-2xl opacity-40 scale-110" />
+                        <img src={(video as any).coverImage} alt={video.title} className="relative z-10 w-full h-full object-contain p-2 drop-shadow-2xl" />
+                        <div className="absolute inset-0 bg-black/10 hover:bg-transparent transition-colors pointer-events-none z-20"></div>
                       </div>
                     ) : (
                       <>
@@ -174,11 +176,11 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, onBrowseCases, onVie
                     )}
 
                     {/* Content */}
-                    <div className="relative z-20 w-full h-full flex flex-col justify-end pb-8">
-                      {/* Centered Play Button */}
+                    <div className="relative z-20 w-full h-full flex flex-col justify-end pb-8 pointer-events-none">
+                      {/* Play Button */}
                       <div
                         onClick={() => onViewStory(video.id)}
-                        className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 md:w-20 md:h-20 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center cursor-pointer hover:scale-110 transition-transform border border-white/20 shadow-xl group/btn ${(video as any).coverImage ? 'bg-[#0F172A]/40' : ''}`}
+                        className={`pointer-events-auto w-16 h-16 md:w-20 md:h-20 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center cursor-pointer hover:scale-110 transition-transform border border-white/20 shadow-xl group/btn ${(video as any).coverImage ? 'absolute bottom-6 right-6 md:bottom-10 md:right-10 bg-[#0F172A]/80 hover:bg-[#C5A059]' : 'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'}`}
                       >
                         <Play className="w-6 h-6 md:w-8 md:h-8 text-white fill-current translate-x-0.5 group-hover/btn:scale-110 transition-transform" />
                       </div>
