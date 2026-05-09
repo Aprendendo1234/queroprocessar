@@ -153,7 +153,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, onBrowseCases, onVie
                 </h2>
               </div>
 
-              <div className="relative w-full h-full min-h-[400px] lg:min-h-[500px] rounded-2xl overflow-hidden shadow-2xl bg-[#0F172A] group border border-slate-100">
+              <div className="relative w-full aspect-video min-h-[300px] rounded-2xl overflow-hidden shadow-2xl bg-[#0F172A] group border border-slate-100">
                 {/* Carousel Content */}
                 {carouselVideos.map((video, index) => (
                   <div
@@ -162,11 +162,35 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, onBrowseCases, onVie
                   >
                     {/* Background with overlay */}
                     {(video as any).coverImage ? (
-                      <div className="absolute inset-0 w-full h-full flex items-center justify-center overflow-hidden bg-[#0F172A]">
-                        {/* Blurred background for premium look */}
-                        <img src={(video as any).coverImage} alt="" className="absolute inset-0 w-full h-full object-cover blur-2xl opacity-40 scale-110" />
-                        <img src={(video as any).coverImage} alt={video.title} className="relative z-10 w-full h-full object-contain p-2 drop-shadow-2xl" />
-                        <div className="absolute inset-0 bg-black/10 hover:bg-transparent transition-colors pointer-events-none z-20"></div>
+                      <div className="absolute inset-0 w-full h-full bg-black">
+                        {/* Main Image perfectly fitted */}
+                        <img src={(video as any).coverImage} alt={video.title} className="w-full h-full object-cover opacity-90" />
+                        
+                        {/* YouTube Style Bottom Controls */}
+                        <div className="absolute bottom-0 left-0 right-0 w-full px-6 pb-6 pt-24 bg-gradient-to-t from-black via-black/50 to-transparent flex flex-col pointer-events-auto">
+                          {/* Progress bar line (YouTube red) */}
+                          <div className="w-full h-1 bg-white/30 rounded cursor-pointer mb-4 hover:h-1.5 transition-all relative group/bar" onClick={() => onViewStory(video.id)}>
+                            <div className="absolute top-0 left-0 h-full w-[15%] bg-[#ff0000] rounded"></div>
+                            <div className="absolute top-1/2 left-[15%] -translate-y-1/2 w-3.5 h-3.5 bg-[#ff0000] rounded-full opacity-0 group-hover/bar:opacity-100 transition-opacity shadow-[0_0_10px_rgba(255,0,0,0.5)]"></div>
+                          </div>
+                          {/* Controls row */}
+                          <div className="flex justify-between items-center text-white">
+                            <div className="flex items-center gap-6">
+                              {/* Small Play Button */}
+                              <button onClick={() => onViewStory(video.id)} className="hover:text-[#ff0000] transition-colors group/playbtn">
+                                <Play className="w-6 h-6 fill-current group-hover/playbtn:scale-110 transition-transform" />
+                              </button>
+                              <span className="text-xs font-medium opacity-90">0:15 / {video.duration || '1:45'}</span>
+                            </div>
+                            <div className="flex items-center gap-5 opacity-80">
+                               {/* Fake Subtitles & Fullscreen icons */}
+                               <div className="w-5 h-4 border-2 border-white rounded-sm flex items-center justify-center cursor-pointer hover:opacity-100">
+                                 <div className="w-3 h-1 bg-white rounded-sm"></div>
+                               </div>
+                               <div className="w-5 h-5 border-2 border-white border-dashed rounded-sm cursor-pointer hover:opacity-100"></div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     ) : (
                       <>
@@ -175,40 +199,42 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, onBrowseCases, onVie
                       </>
                     )}
 
-                    {/* Content */}
-                    <div className="relative z-20 w-full h-full flex flex-col justify-end pb-8 pointer-events-none">
-                      {/* Play Button */}
-                      <div
-                        onClick={() => onViewStory(video.id)}
-                        className={`pointer-events-auto w-16 h-16 md:w-20 md:h-20 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center cursor-pointer hover:scale-110 transition-transform border border-white/20 shadow-xl group/btn ${(video as any).coverImage ? 'absolute bottom-6 right-6 md:bottom-10 md:right-10 bg-[#0F172A]/80 hover:bg-[#C5A059]' : 'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'}`}
-                      >
-                        <Play className="w-6 h-6 md:w-8 md:h-8 text-white fill-current translate-x-0.5 group-hover/btn:scale-110 transition-transform" />
-                      </div>
+                    {/* Content for non-image slides */}
+                    <div className="relative z-20 w-full h-full flex flex-col justify-end pb-12 pointer-events-none">
+                      {/* Centered Play Button for normal slides */}
+                      {!(video as any).coverImage && (
+                        <div
+                          onClick={() => onViewStory(video.id)}
+                          className={`pointer-events-auto absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 md:w-20 md:h-20 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center cursor-pointer hover:scale-110 transition-transform border border-white/20 shadow-xl group/btn`}
+                        >
+                          <Play className="w-6 h-6 md:w-8 md:h-8 text-white fill-current translate-x-0.5 group-hover/btn:scale-110 transition-transform" />
+                        </div>
+                      )}
 
                       {/* Bottom Text Content - Hide if coverImage is present */}
                       {!(video as any).coverImage && (
                         <div className="flex flex-col items-center justify-center text-center px-8">
-                          <h3 className="text-white text-2xl md:text-3xl lg:text-4xl font-serif mb-2 drop-shadow-md">{video.title}</h3>
-                          <p className="text-[#C5A059] text-base md:text-lg font-bold uppercase tracking-widest">{video.duration}</p>
-                          <button
-                            onClick={() => onViewStory(video.id)}
-                            className="mt-4 text-white/70 hover:text-white text-xs md:text-sm uppercase tracking-widest border-b border-white/30 hover:border-white transition-colors pb-1"
-                          >
-                            Ver Detalhes do Caso
-                          </button>
+                           <h3 className="text-white text-2xl md:text-3xl lg:text-4xl font-serif mb-2 drop-shadow-md">{video.title}</h3>
+                           <p className="text-[#C5A059] text-base md:text-lg font-bold uppercase tracking-widest">{video.duration}</p>
+                           <button
+                             onClick={() => onViewStory(video.id)}
+                             className="pointer-events-auto mt-4 text-white/70 hover:text-white text-xs md:text-sm uppercase tracking-widest border-b border-white/30 hover:border-white transition-colors pb-1"
+                           >
+                             Ver Detalhes do Caso
+                           </button>
                         </div>
                       )}
                     </div>
                   </div>
                 ))}
 
-                {/* Indicators */}
-                <div className="absolute bottom-6 md:bottom-8 left-0 right-0 flex justify-center space-x-3 z-30">
+                {/* Indicators (moved to top to avoid bottom player controls) */}
+                <div className="absolute top-6 right-6 flex justify-end space-x-2 z-30 pointer-events-auto">
                   {carouselVideos.map((_, idx) => (
                     <button
                       key={idx}
                       onClick={() => setCurrentVideoIndex(idx)}
-                      className={`h-1.5 rounded-full transition-all duration-300 ${idx === currentVideoIndex ? 'w-12 bg-[#C5A059]' : 'w-2 bg-white/30 hover:bg-white/50'}`}
+                      className={`h-1.5 rounded-full shadow-md transition-all duration-300 ${idx === currentVideoIndex ? 'w-8 bg-[#ff0000]' : 'w-2 bg-white/50 hover:bg-white/80'}`}
                       aria-label={`Go to slide ${idx + 1}`}
                     />
                   ))}
