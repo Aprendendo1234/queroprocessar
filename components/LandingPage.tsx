@@ -73,11 +73,11 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, onBrowseCases, onVie
     <div className="flex flex-col bg-[#FCFCFD] text-slate-800">
       {/* Hero Section */}
       <section className="relative pt-4 pb-2 lg:pt-6 lg:pb-4 overflow-hidden bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid lg:grid-cols-12 gap-16 items-stretch">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full overflow-hidden">
+          <div className="grid lg:grid-cols-12 gap-y-12 lg:gap-16 items-stretch">
             {/* Left: Vertical "Como Funciona" with Horizontal Stats */}
             <div className="lg:col-span-5 flex flex-col py-6 order-2">
-              <div className="glass-card rounded-2xl p-8 lg:p-10 border border-slate-100 shadow-[0_32px_64px_-16px_rgba(15,23,42,0.08)] relative z-20 overflow-hidden bg-white flex flex-col h-full flex-1">
+              <div className="glass-card rounded-2xl p-6 sm:p-8 lg:p-10 border border-slate-100 shadow-[0_32px_64px_-16px_rgba(15,23,42,0.08)] relative z-20 overflow-hidden bg-white flex flex-col h-full flex-1">
                 <h3 className="text-xl font-serif text-[#0F172A] mb-8 border-b border-slate-100 pb-4 flex items-center justify-between">
                   Como Funciona
                   <div className="flex space-x-1">
@@ -110,20 +110,20 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, onBrowseCases, onVie
                   </div>
 
                   {/* Action Button */}
-                  <div className="mt-8 pl-16 relative z-10">
+                  <div className="mt-8 sm:pl-16 relative z-10 flex justify-center sm:justify-start">
                     <button
                       onClick={onStart}
-                      className="bg-[#0F172A] text-white px-8 py-4 rounded-sm font-bold text-xs uppercase tracking-widest hover:bg-[#1E293B] transition shadow-lg flex items-center group"
+                      className="w-full sm:w-auto justify-center bg-[#0F172A] text-white px-4 sm:px-8 py-4 rounded-sm font-bold text-xs uppercase tracking-widest hover:bg-[#1E293B] transition shadow-lg flex items-center group"
                     >
                       CADASTRE SEU CASO
-                      <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform w-4 h-4" />
+                      <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform w-4 h-4 flex-shrink-0" />
                     </button>
                   </div>
                 </div>
 
                 {/* HORIZONTAL STATS - ABAIXO DO TERCEIRO ITEM */}
                 <div className="pt-8 border-t border-slate-100">
-                  <div className="grid grid-cols-4 gap-2">
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-2">
                     {stats.map((s, i) => (
                       <div key={i} className="text-center group">
                         <p className="text-sm lg:text-base font-serif text-[#0F172A] mb-0.5 tracking-tighter group-hover:text-[#C5A059] transition-colors">
@@ -140,11 +140,11 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, onBrowseCases, onVie
             </div>
 
             {/* Right: Carousel (Old Vitórias Section) */}
-            <div className="lg:col-span-7 flex flex-col justify-center py-6 order-1">
+            <div className="lg:col-span-7 flex flex-col justify-center py-6 order-1 min-w-0 w-full overflow-hidden">
               
               {/* Mobile Only Title */}
-              <div className="block lg:hidden text-center mb-10 mt-6">
-                <h2 className="text-5xl sm:text-6xl font-serif text-[#0F172A] leading-[1.1]">
+              <div className="block lg:hidden text-center mb-10 mt-6 px-2">
+                <h2 className="text-4xl sm:text-6xl font-serif text-[#0F172A] leading-[1.1] break-words">
                   Vitórias <br />
                   <span className="text-[#C5A059] relative inline-block mt-2">
                     Inspiradoras
@@ -153,7 +153,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, onBrowseCases, onVie
                 </h2>
               </div>
 
-              <div className="relative w-full aspect-video min-h-[300px] rounded-2xl overflow-hidden shadow-2xl bg-[#0F172A] group border border-slate-100">
+              <div className="relative w-full aspect-video rounded-2xl overflow-hidden shadow-2xl bg-[#0F172A] group border border-slate-100">
                 {/* Carousel Content */}
                 {carouselVideos.map((video, index) => (
                   <div
@@ -162,35 +162,8 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, onBrowseCases, onVie
                   >
                     {/* Background with overlay */}
                     {(video as any).coverImage ? (
-                      <div className="absolute inset-0 w-full h-full bg-black">
-                        {/* Main Image perfectly fitted */}
-                        <img src={(video as any).coverImage} alt={video.title} className="w-full h-full object-cover opacity-90" />
-                        
-                        {/* YouTube Style Bottom Controls */}
-                        <div className="absolute bottom-0 left-0 right-0 w-full px-6 pb-6 pt-24 bg-gradient-to-t from-black via-black/50 to-transparent flex flex-col pointer-events-auto">
-                          {/* Progress bar line (YouTube red) */}
-                          <div className="w-full h-1 bg-white/30 rounded cursor-pointer mb-4 hover:h-1.5 transition-all relative group/bar" onClick={() => onViewStory(video.id)}>
-                            <div className="absolute top-0 left-0 h-full w-[15%] bg-[#ff0000] rounded"></div>
-                            <div className="absolute top-1/2 left-[15%] -translate-y-1/2 w-3.5 h-3.5 bg-[#ff0000] rounded-full opacity-0 group-hover/bar:opacity-100 transition-opacity shadow-[0_0_10px_rgba(255,0,0,0.5)]"></div>
-                          </div>
-                          {/* Controls row */}
-                          <div className="flex justify-between items-center text-white">
-                            <div className="flex items-center gap-6">
-                              {/* Small Play Button */}
-                              <button onClick={() => onViewStory(video.id)} className="hover:text-[#ff0000] transition-colors group/playbtn">
-                                <Play className="w-6 h-6 fill-current group-hover/playbtn:scale-110 transition-transform" />
-                              </button>
-                              <span className="text-xs font-medium opacity-90">0:15 / {video.duration || '1:45'}</span>
-                            </div>
-                            <div className="flex items-center gap-5 opacity-80">
-                               {/* Fake Subtitles & Fullscreen icons */}
-                               <div className="w-5 h-4 border-2 border-white rounded-sm flex items-center justify-center cursor-pointer hover:opacity-100">
-                                 <div className="w-3 h-1 bg-white rounded-sm"></div>
-                               </div>
-                               <div className="w-5 h-5 border-2 border-white border-dashed rounded-sm cursor-pointer hover:opacity-100"></div>
-                            </div>
-                          </div>
-                        </div>
+                      <div className="absolute inset-0 w-full h-full bg-black cursor-pointer" onClick={() => onViewStory(video.id)}>
+                        <img src={(video as any).coverImage} alt={video.title} className="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity" />
                       </div>
                     ) : (
                       <>
@@ -228,13 +201,13 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, onBrowseCases, onVie
                   </div>
                 ))}
 
-                {/* Indicators (moved to top to avoid bottom player controls) */}
-                <div className="absolute top-6 right-6 flex justify-end space-x-2 z-30 pointer-events-auto">
+                {/* Indicators */}
+                <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-1.5 sm:gap-2 z-30 pointer-events-auto px-4 flex-wrap">
                   {carouselVideos.map((_, idx) => (
                     <button
                       key={idx}
                       onClick={() => setCurrentVideoIndex(idx)}
-                      className={`h-1.5 rounded-full shadow-md transition-all duration-300 ${idx === currentVideoIndex ? 'w-8 bg-[#ff0000]' : 'w-2 bg-white/50 hover:bg-white/80'}`}
+                      className={`h-1.5 rounded-full shadow-md transition-all duration-300 ${idx === currentVideoIndex ? 'w-6 bg-[#C5A059]' : 'w-1.5 bg-white/50 hover:bg-white/80'}`}
                       aria-label={`Go to slide ${idx + 1}`}
                     />
                   ))}
@@ -266,17 +239,17 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, onBrowseCases, onVie
             </p>
           </div>
 
-          <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6 justify-center w-full">
+          <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6 justify-center w-full px-4 sm:px-0">
             <button
               onClick={onStart}
-              className="bg-[#0F172A] text-white px-12 py-6 rounded-sm font-bold text-sm uppercase tracking-widest hover:bg-[#1E293B] transition shadow-2xl flex items-center justify-center group"
+              className="bg-[#0F172A] text-white px-6 sm:px-12 py-4 sm:py-6 rounded-sm font-bold text-xs sm:text-sm uppercase tracking-widest hover:bg-[#1E293B] transition shadow-2xl flex items-center justify-center group w-full sm:w-auto"
             >
               CADASTRE SEU CASO
-              <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform w-4 h-4" />
+              <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform w-4 h-4 flex-shrink-0" />
             </button>
             <button
               onClick={onBrowseCases}
-              className="bg-white border border-slate-200 px-12 py-6 rounded-sm flex flex-col items-center justify-center min-w-[200px] leading-tight hover:bg-slate-50 transition-colors"
+              className="bg-white border border-slate-200 px-6 sm:px-12 py-4 sm:py-6 rounded-sm flex flex-col items-center justify-center min-w-[200px] leading-tight hover:bg-slate-50 transition-colors w-full sm:w-auto"
             >
               <span className="text-[#0F172A] font-bold text-xs uppercase tracking-[0.2em]">Casos Relatados</span>
               <span className="text-slate-400 text-[10px] lowercase tracking-normal mt-1">(para advogados)</span>
@@ -338,7 +311,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, onBrowseCases, onVie
               ))}
             </div>
 
-            <div className="bg-[#0F172A] p-16 rounded-lg text-white shadow-2xl relative overflow-hidden group">
+            <div className="bg-[#0F172A] p-8 sm:p-16 rounded-lg text-white shadow-2xl relative overflow-hidden group">
               <div className="absolute top-0 right-0 p-8 opacity-5 transition-transform duration-700 group-hover:scale-110">
                 <Shield className="w-64 h-64" />
               </div>
@@ -346,8 +319,8 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, onBrowseCases, onVie
               <ul className="space-y-6 relative z-10">
                 {['Acesso a advogados de todo o país', 'Chat integrado em tempo real', 'Suporte especializado', 'Gestão simples de casos'].map((l, i) => (
                   <li key={i} className="flex items-center space-x-4">
-                    <div className="w-2 h-2 rounded-full bg-[#C5A059]"></div>
-                    <span className="text-slate-300 font-light">{l}</span>
+                    <div className="w-2 h-2 rounded-full bg-[#C5A059] flex-shrink-0"></div>
+                    <span className="text-slate-300 font-light text-sm sm:text-base">{l}</span>
                   </li>
                 ))}
               </ul>
@@ -423,12 +396,12 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, onBrowseCases, onVie
             ))}
           </div>
 
-          <div className="bg-white border border-slate-200 p-12 rounded-lg flex flex-col items-center text-center gap-10 shadow-sm">
+          <div className="bg-white border border-slate-200 p-8 sm:p-12 rounded-lg flex flex-col items-center text-center gap-8 sm:gap-10 shadow-sm">
             <div className="w-full max-w-none">
               <h3 className="text-2xl font-serif text-[#0F172A] mb-4">Vantagens de se cadastrar</h3>
               <p className="text-slate-500 font-light text-center">Tenha em mãos as melhores oportunidades jurídicas, filtradas por área de atuação e urgência, prontas para o seu atendimento.</p>
             </div>
-            <button onClick={onBrowseCases} className="bg-[#0F172A] text-white px-10 py-5 rounded-sm font-bold uppercase tracking-widest text-xs hover:bg-[#1E293B] transition shadow-lg">Cadastrar Escritório</button>
+            <button onClick={onBrowseCases} className="w-full sm:w-auto bg-[#0F172A] text-white px-6 sm:px-10 py-4 sm:py-5 rounded-sm font-bold uppercase tracking-widest text-xs hover:bg-[#1E293B] transition shadow-lg">Cadastrar Escritório</button>
           </div>
         </div>
       </section>
@@ -491,13 +464,13 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, onBrowseCases, onVie
       {/* Final CTA */}
       <section className="py-24 bg-white border-t border-slate-100">
         <div className="max-w-5xl mx-auto px-4">
-          <div className="bg-[#0F172A] py-12 px-8 rounded-lg text-center shadow-2xl relative overflow-hidden">
+          <div className="bg-[#0F172A] py-12 px-6 sm:px-8 rounded-lg text-center shadow-2xl relative overflow-hidden">
             <div className="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/cubes.png")' }}></div>
-            <h2 className="text-4xl font-serif text-white mb-6 relative z-10 leading-tight">Pronto para resolver seu problema?</h2>
-            <p className="text-slate-400 mb-8 text-sm relative z-10 w-full max-w-none font-light">
+            <h2 className="text-3xl sm:text-4xl font-serif text-white mb-6 relative z-10 leading-tight">Pronto para resolver seu problema?</h2>
+            <p className="text-slate-400 mb-8 text-xs sm:text-sm relative z-10 w-full max-w-none font-light">
               Junte-se a milhares de pessoas que já encontraram o profissional certo através de nossa rede exclusiva.
             </p>
-            <button onClick={onStart} className="bg-[#C5A059] text-white px-10 py-4 rounded-sm font-bold text-xs uppercase tracking-widest hover:bg-[#B38E46] transition shadow-2xl relative z-10">
+            <button onClick={onStart} className="w-full sm:w-auto bg-[#C5A059] text-white px-6 sm:px-10 py-4 rounded-sm font-bold text-[10px] sm:text-xs uppercase tracking-widest hover:bg-[#B38E46] transition shadow-2xl relative z-10">
               CADASTRAR MEU CASO AGORA
             </button>
           </div>
