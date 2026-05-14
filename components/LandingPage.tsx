@@ -162,8 +162,8 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart, onBrowseCases, onVie
                   >
                     {/* Background with overlay */}
                     {(video as any).coverImage ? (
-                      <div className="absolute inset-0 w-full h-full bg-black cursor-pointer" onClick={() => onViewStory(video.id)}>
-                        <img src={(video as any).coverImage} alt={video.title} className="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity" />
+                      <div className="absolute inset-0 w-full h-full bg-black cursor-pointer flex items-center justify-center" onClick={() => onViewStory(video.id)}>
+                        <img src={(video as any).coverImage} alt={video.title} className="w-full h-full object-contain opacity-90 hover:opacity-100 transition-opacity" />
                       </div>
                     ) : (
                       <>
