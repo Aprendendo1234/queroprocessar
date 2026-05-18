@@ -92,6 +92,15 @@ export const SUCCESS_STORIES = [
     processDetails: "O vídeo explora o funcionamento da nossa plataforma, destacando as áreas de atuação (como Indenização Aérea, Revisão de Juros Abusivos, Divórcio Consensual, entre outras) e o passo a passo para conectar clientes a especialistas jurídicos."
   },
   {
+    id: 9,
+    title: "Sua rede social foi hackeada ou banida?",
+    color: "bg-indigo-600",
+    coverImage: "/redesocialhackeada.png",
+    duration: "Respostas liminares em curto espaço de tempo.",
+    summary: "Recupere o acesso à sua conta de rede social indevidamente invadida ou desativada.",
+    processDetails: "Muitos usuários sofrem com a perda de suas contas profissionais ou pessoais por ataques de hackers ou banimentos injustos das plataformas. Saiba que é possível ingressar com medida judicial para obrigar a plataforma a restabelecer o acesso à sua conta e, em muitos casos, obter indenização por danos morais e materiais."
+  },
+  {
     id: 5,
     title: "Sujaram seu nome? Nem conhece a empresa? Você pode ser indenizado!",
     color: "bg-teal-600",
