@@ -16,6 +16,7 @@ import TriageFunnel from './components/TriageFunnel';
 import Footer from './components/Footer';
 import { SUCCESS_STORIES } from './constants';
 import { supabase } from './lib/supabase';
+import ScrollToTop from './components/ScrollToTop';
 
 const INITIAL_CASES: LegalCase[] = [
   {
@@ -439,6 +440,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <ScrollToTop />
       <Navbar
         user={currentUser}
         onLogout={logout}
