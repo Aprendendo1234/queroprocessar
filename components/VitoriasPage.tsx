@@ -47,8 +47,8 @@ const VitoriasPage: React.FC<VitoriasPageProps> = ({ onBack }) => {
                                 <div>
                                     <div className={`relative aspect-video rounded-2xl overflow-hidden shadow-2xl bg-slate-900 group`}>
                                         {(story as any).coverImage ? (
-                                            <div className="absolute inset-0 w-full h-full">
-                                                <img src={(story as any).coverImage} alt={story.title} className="w-full h-full object-cover" />
+                                            <div className="absolute inset-0 w-full h-full bg-black">
+                                                <img src={(story as any).coverImage} alt={story.title} className="w-full h-full object-contain" />
                                                 <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors pointer-events-none"></div>
                                             </div>
                                         ) : (
