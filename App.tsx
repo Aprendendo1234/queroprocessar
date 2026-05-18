@@ -14,7 +14,6 @@ import PropostaPage from './components/PropostaPage';
 
 import TriageFunnel from './components/TriageFunnel';
 import Footer from './components/Footer';
-import CaseSuccessPage from './components/CaseSuccessPage';
 import { SUCCESS_STORIES } from './constants';
 import { supabase } from './lib/supabase';
 
@@ -71,14 +70,6 @@ const INITIAL_CASES: LegalCase[] = [
   }
 ];
 
-// Helper to wrap CaseSuccessPage with ID from URL
-const SuccessCaseWrapper = ({ onBack }: { onBack: () => void }) => {
-  const { id } = useParams();
-  const story = SUCCESS_STORIES.find(s => s.id === Number(id));
-  
-  if (!story) return <Navigate to="/vitorias" />;
-  return <CaseSuccessPage story={story} onBack={onBack} />;
-};
 
 export default function App() {
   // Initialize users state with values from MOCK_USERS
@@ -465,15 +456,13 @@ export default function App() {
             <LandingPage
               onStart={() => navigate('/relatar-caso')}
               onBrowseCases={() => navigate(currentUser ? '/painel' : '/login')}
-              onViewStory={(id) => navigate(`/vitoria/${id}`)}
+              onViewStory={(id) => navigate(`/vitorias#vitoria-${id}`)}
             />
           } />
           
           <Route path="/vitorias" element={<VitoriasPage onBack={() => navigate('/')} />} />
           
           <Route path="/sobre" element={<PropostaPage onBack={() => navigate('/')} />} />
-          
-          <Route path="/vitoria/:id" element={<SuccessCaseWrapper onBack={() => navigate('/vitorias')} />} />
           
           <Route path="/login" element={<AuthPage onLogin={login} onRegister={register} onGoToTriage={() => navigate('/relatar-caso')} />} />
           

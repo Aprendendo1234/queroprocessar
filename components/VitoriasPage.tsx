@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { ArrowLeft, Play, FileText, Video } from 'lucide-react';
 import { SuccessStory } from '../types';
 import { SUCCESS_STORIES } from '../constants';
@@ -8,6 +9,22 @@ interface VitoriasPageProps {
 }
 
 const VitoriasPage: React.FC<VitoriasPageProps> = ({ onBack }) => {
+    const location = useLocation();
+
+    useEffect(() => {
+        if (location.hash) {
+            const id = location.hash.substring(1);
+            const element = document.getElementById(id);
+            if (element) {
+                setTimeout(() => {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
+            }
+        } else {
+            window.scrollTo(0, 0);
+        }
+    }, [location]);
+
     return (
         <div className="min-h-screen bg-[#FCFCFD]">
             <div className="max-w-7xl mx-auto px-4 py-12">
@@ -22,7 +39,7 @@ const VitoriasPage: React.FC<VitoriasPageProps> = ({ onBack }) => {
 
                 <div className="space-y-24">
                     {SUCCESS_STORIES.map((story) => (
-                        <div key={story.id} className="border-b border-slate-100 pb-20 last:border-0">
+                        <div id={`vitoria-${story.id}`} key={story.id} className="border-b border-slate-100 pb-20 last:border-0 scroll-mt-24">
                             <h1 className="text-3xl md:text-5xl font-serif text-[#0F172A] mb-12">{story.title}</h1>
 
                             <div className="grid lg:grid-cols-2 gap-12 mb-16">
